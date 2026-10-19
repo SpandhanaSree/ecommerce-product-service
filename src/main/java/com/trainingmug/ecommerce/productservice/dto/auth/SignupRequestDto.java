@@ -1,4 +1,3 @@
-
 package com.trainingmug.ecommerce.productservice.dto.auth;
 
 import lombok.Data;

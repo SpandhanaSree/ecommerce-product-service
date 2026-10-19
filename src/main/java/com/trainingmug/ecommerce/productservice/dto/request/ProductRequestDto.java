@@ -1,3 +1,4 @@
+//Client --> Backend
 package com.trainingmug.ecommerce.productservice.dto.request;
 
 import com.trainingmug.ecommerce.productservice.enums.Category;

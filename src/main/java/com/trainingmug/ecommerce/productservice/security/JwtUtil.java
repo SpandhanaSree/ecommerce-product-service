@@ -1,4 +1,3 @@
-
 package com.trainingmug.ecommerce.productservice.security;
 
 import com.auth0.jwt.JWT;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component
+@Component //tells Spring to create and manage a JwtUtil object
 public class JwtUtil {
 
     @Value("${jwt.secret}")
@@ -23,7 +22,7 @@ public class JwtUtil {
     private long refreshTokenValidity;
 
     private Algorithm getAlgorithm() {
-        return Algorithm.HMAC256(secret);
+        return Algorithm.HMAC256(secret); //specifies the algorithm used to sign and verify JWT signatures
     }
 
     public String generateAccessToken(String email, String role) {
@@ -38,23 +37,24 @@ public class JwtUtil {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + validity);
 
-        return JWT.create()
+        return JWT.create() //Begins building the token that will eventually be returned to the caller
                 .withSubject(email)
                 .withClaim("role", role)
                 .withIssuer("TrainingMug")
                 .withIssuedAt(now)
                 .withExpiresAt(expiry)
-                .sign(getAlgorithm());
+                .sign(getAlgorithm()); //lets the server detect if someone changes the token's signed contents
     }
 
+    //Accepts a token string and returns its decoded information if validation succeeds
     public DecodedJWT validateToken(String token) {
-        JWTVerifier verifier = JWT.require(getAlgorithm())
+        JWTVerifier verifier = JWT.require(getAlgorithm()) //Creates a verifier that uses the configured signing algorithm and secret
                 .withIssuer("TrainingMug")
                 .build();
-
         return verifier.verify(token);
     }
 
+    //method validates the token before extracting the email
     public String extractEmail(String token) {
         return validateToken(token).getSubject();
     }

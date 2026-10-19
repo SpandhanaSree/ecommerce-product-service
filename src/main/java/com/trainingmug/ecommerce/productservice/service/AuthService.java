@@ -1,5 +1,9 @@
 
 package com.trainingmug.ecommerce.productservice.service;
+/*
+    Request DTO: client → backend
+    Response DTO: backend → client 
+*/
 
 import com.trainingmug.ecommerce.productservice.dto.auth.AuthResponseDto;
 import com.trainingmug.ecommerce.productservice.dto.auth.LoginRequestDto;
